@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
 from EmotionDetection import emotion_detector
+from flask_cors import CORS
 import os
 
 app = Flask(__name__, 
             static_folder='static',
             template_folder='templates')
+CORS(app, origins=["http://localhost:5000", "http://127.0.0.:5000"])
 
 # Désactiver certaines sécurités pour IBM Labs
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -44,7 +46,7 @@ def index():
         </html>
         """
 
-@app.route('/emotionDetector', methods=['GET', 'OPTIONS'])
+@app.route('/emotionDetector', methods=['GET', 'OPTIONS', 'POST'])
 def emotion_detector_endpoint():
     """
     Endpoint pour l'analyse des émotions
@@ -82,8 +84,7 @@ def emotion_detector_endpoint():
     )
     
     return jsonify({
-        "response": response_text,
-        "scores": result
+        "response": response_text
     })
 
 @app.route('/static/<path:filename>')
