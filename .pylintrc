@@ -1,0 +1,14 @@
+[MASTER]
+disable=
+    import-error,
+    wrong-import-order,
+    broad-exception-caught,
+    missing-final-newline,
+    unused-import,
+    undefined-variable
+
+[MESSAGES CONTROL]
+max-line-length=100
+
+[FORMAT]
+max-line-length=100
