@@ -58,18 +58,16 @@ def emotion_detector_endpoint():
     
     text_to_analyze = request.args.get('textToAnalyze', '')
     
-    if not text_to_analyze:
+    if not text_to_analyze or text_to_analyze.strip() == "":
         return jsonify({
-            "error": "Texte manquant",
-            "message": "Veuillez fournir un texte à analyser dans le paramètre 'textToAnalyze'"
+            "message": "Texte invalide ! Veuillez réessayer !"
         }), 400
     
     result = emotion_detector(text_to_analyze)
     
     if result['dominant_emotion'] is None:
         return jsonify({
-            "error": "Analyse impossible",
-            "message": "Impossible d'analyser les émotions dans ce texte"
+            "message": "Texte invalide ! Veuillez réessayer !"
         }), 400
     
     # Format de réponse demandé
